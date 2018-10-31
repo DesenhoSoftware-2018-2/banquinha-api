@@ -6,9 +6,10 @@ class MonitoriaSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Monitoria
         fields = (
+            'mentor',
+            'mentorado',
             'nome',
             'conteudo',
-            'data',
-            'hora',
+            'dataHora',
             'imagem',
             'tag',)
