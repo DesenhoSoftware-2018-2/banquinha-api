@@ -21,7 +21,6 @@ def monitoria(request):
         if request.data:
             monitoria, created = Monitoria.objects.get_or_create(
                 mentor = request.data['mentor'],
-                mentorado = request.data['mentorado'],
                 nome = request.data['nome'],
                 imagem = request.data['imagem'],
                 tag = request.data['tag'],
