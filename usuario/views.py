@@ -8,20 +8,15 @@ from rest_framework.decorators import api_view
 from django.http import JsonResponse
 import requests, json
 
-@api_view(['GET'])
-def getUsuario(request):
+@api_view(['GET', 'POST'])
+def usuario(request):
     #method to GET all users from API
     if request.method == 'GET':
         usuario = Usuario.objects.all()
         serializer = UsuarioSerializer(usuario, many=True)
         return JsonResponse(serializer.data, safe=False)
-    else:
-        return Response({}, status=status.HTTP_404_NOT_FOUND)
 
-@api_view(['POST'])
-def createUsuario(request):
-    if request.method == 'POST':
-
+    elif request.method == 'POST':
         if request.data:
             usuario, created = Usuario.objects.get_or_create(
                 nome = request.data['nome'],
@@ -35,5 +30,3 @@ def createUsuario(request):
                 return Response(status=status.HTTP_400_BAD_REQUEST)
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
-    else:
-        return Response(status=status.HTTP_400_BAD_REQUEST)
