@@ -16,10 +16,11 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from django.urls import path
-from usuario.views import usuario
+from usuario.views import postUsuario, getUsuario
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    url(r'^usuario/', usuario)
+    url(r'^usuario/', getUsuario),
+    url(r'^criaUsuario/', postUsuario),
 ]

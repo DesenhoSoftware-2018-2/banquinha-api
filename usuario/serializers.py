@@ -7,6 +7,6 @@ class UsuarioSerializer(serializers.HyperlinkedModelSerializer):
         fields = (
             'nome',
             'email',
-            'senha'
+            'tokenUsuario'
             #'avaliacaoFK'
         )
