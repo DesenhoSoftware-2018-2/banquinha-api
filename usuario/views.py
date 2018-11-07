@@ -27,7 +27,6 @@ def get(request):
 def post(request):
     if request.method == 'POST':
         if request.data:
-            import ipdb; ipdb.set_trace()
             usuarioAuth = User.objects.filter(email=request.data['email'])
             if len(usuarioAuth) > 0:
                 return Response(status=status.HTTP_400_BAD_REQUEST)
@@ -61,9 +60,11 @@ def post(request):
                         'secret', algorithm='HS256'
                     )
                 )
+
+                import ipdb; ipdb.set_trace()
                 if created:
                     return Response(status=status.HTTP_200_OK)
                 else:
                     return Response(status=status.HTTP_400_BAD_REQUEST)
     else:
-        return Response(status=status.HTTP_400_BAD_REQUEST)
+        return Response(status=status.HTTP_405_BAD_REQUEST)
