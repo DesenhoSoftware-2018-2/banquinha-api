@@ -1,18 +1,26 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.conf import settings
 
 length = 5000
 
-class Usuario(models.Model):
-    usuario = models.ForeignKey(
+class UserProfile (models.Model):
+    user = models.OneToOneField(
         User,
-        related_name = 'User',
-        null = True,
-        on_delete = models.CASCADE
+        on_delete=models.CASCADE,
+        primary_key = True
     )
-    tokenUsuario = models.TextField(
+    description = models.TextField(
         max_length = length,
-        default = None,
+        default = '',
+        blank = True,
+        null=True
+    )
+    achievement = models.TextField(
+        max_length = length,
+        default = '',
         blank = True,
         null=True
     )
@@ -23,9 +31,15 @@ class Usuario(models.Model):
     #    on_delete=models.CASCADE,
     #    related_name='avaliacao',
     #)
-
     #@property
     #def avaliacaoFK(self):
     #    return self.avaliacao.id
-
     #implementar função da média da avaliação
+
+@receiver(post_save, sender=User)
+def create_profile_handler(sender, instance, created, **kwargs):
+    if not created:
+        return
+        # Create the profile object, only if it is newly created
+        userProfile = models.UserProfile(user=instance)
+        userProfile.save()
