@@ -21,7 +21,7 @@ def get(request):
         if not users:
             return Response({}, status=status.HTTP_404_NOT_FOUND)
         else:
-            return JsonResponse(users, safe=False)
+            return Response({'usuarios': UserSerializer(users, many=True).data})
 
 @api_view(['POST'])
 def post(request):
