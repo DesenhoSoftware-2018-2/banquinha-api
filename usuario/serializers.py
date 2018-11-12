@@ -1,12 +1,23 @@
 from rest_framework import serializers
-from .models import Usuario
+from django.contrib.auth.models import User
+from .models import UserProfile
 
-class UsuarioSerializer(serializers.HyperlinkedModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Usuario
+        model = User
         fields = (
-            'nome',
+            'username',
             'email',
-            'tokenUsuario'
-            #'avaliacaoFK'
+            'password',
+            'first_name',
+            'last_name'
         )
+
+class UserProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserProfile
+        fields = (
+            'description',
+            'achievement'
+        )
+        
