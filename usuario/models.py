@@ -6,7 +6,7 @@ from django.conf import settings
 
 length = 5000
 
-class UserProfile (models.Model):
+class Profile (models.Model):
     user = models.OneToOneField(
         User,
         on_delete=models.CASCADE,
@@ -37,9 +37,10 @@ class UserProfile (models.Model):
     #implementar função da média da avaliação
 
 @receiver(post_save, sender=User)
-def create_profile_handler(sender, instance, created, **kwargs):
-    if not created:
-        return
-        # Create the profile object, only if it is newly created
-        userProfile = models.UserProfile(user=instance)
-        userProfile.save()
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
+
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    instance.profile.save()
