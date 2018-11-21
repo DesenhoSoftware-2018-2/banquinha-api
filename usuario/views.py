@@ -18,11 +18,21 @@ from .serializers import ProfileSerializer
 def get(request):
     if request.method == 'GET':
         users = User.objects.all()
-        user_serialization = serializers.serialize('json', list(users))
         if not users:
             return Response({}, status=status.HTTP_404_NOT_FOUND)
         else:
             return Response({'usuarios': UserSerializer(users, many=True).data})
+
+@api_view(['GET'])
+@permission_classes((AllowAny,))
+def getprofile(request):
+    if request.method == 'GET':
+        users = Profile.objects.all()
+        user_serialazed = ProfileSerializer(users, many=True).data
+        if not users:
+            return Response({}, status=status.HTTP_404_NOT_FOUND)
+        else:
+            return Response({'usuarios': user_serialazed})
 
 @api_view(['POST'])
 @permission_classes((AllowAny,))
@@ -30,7 +40,8 @@ def post(request):
     if request.method == 'POST':
         serialized = UserSerializer(data=request.data)
         if serialized.is_valid():
-            serialized.save()
+            print('is_valid')
+            print(serialized.save())
             return Response(serialized.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serialized._errors, status=status.HTTP_400_BAD_REQUEST)
