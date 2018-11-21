@@ -16,11 +16,12 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from django.urls import path
-from usuario.views import post, get
+from usuario.views import post, get, getprofile
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^usuario/', get),
     url(r'^criaUsuario/', post),
+    url(r'^profile/', getprofile),
 ]
