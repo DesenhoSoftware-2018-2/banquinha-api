@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from .models import Monitoria
-from .serializers import MonitoriaSerializer
+from .models import Monitoria, Tag
+from .serializers import MonitoriaSerializer, TagSerializer
 from rest_framework.response import Response
 from rest_framework import status
 from django.core import serializers
@@ -19,18 +19,26 @@ def monitoria(request):
     elif request.method == 'POST':
 
         if request.data:
-            monitoria, created = Monitoria.objects.get_or_create(
-                mentor = request.data['mentor'],
+            monitoria, created = Monitoria.objects.get_or_create(                
                 nome = request.data['nome'],
+                data = request.data['data'],
                 imagem = request.data['imagem'],
-                tag = request.data['tag'],
-                dataHora = request.data['dataHora'],
-                conteudo = request.data['conteudo']
-            )
+                conteudo = request.data['conteudo'],
+                mentor = request.data['mentor'],
+            )            
 
-            if created:
+            if created:                
                 return Response(status=status.HTTP_200_OK)
             else:
                 return Response(status=status.HTTP_400_BAD_REQUEST)
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET'])
+def tag(request):
+
+    if request.method == 'GET':
+        tag = Tag.objects.all()
+        serializer = TagSerializer(tag, many=True)
+        return JsonResponse(serializer.data, safe=False)

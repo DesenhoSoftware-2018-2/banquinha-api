@@ -17,9 +17,10 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from django.urls import path
-from monitoria.views import monitoria
+from monitoria.views import monitoria, tag
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^monitoria/', monitoria),
+    url(r'^tag/', tag),
 ]
