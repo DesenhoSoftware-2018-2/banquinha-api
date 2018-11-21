@@ -9,13 +9,13 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 import requests, json
 from .models import Profile
-from .serializers import ProfileSerializer
 from .serializers import UserSerializer
+from .serializers import ProfileSerializer
 
 
 @api_view(['GET'])
+@permission_classes((AllowAny,))
 def get(request):
-    #method to GET all users from API
     if request.method == 'GET':
         users = User.objects.all()
         user_serialization = serializers.serialize('json', list(users))
