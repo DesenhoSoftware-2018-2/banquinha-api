@@ -20,10 +20,10 @@ def monitoria(request):
 
         if request.data:
             monitoria, created = Monitoria.objects.get_or_create(                
-                nome = request.data['nome'],
-                data = request.data['data'],
-                imagem = request.data['imagem'],
-                conteudo = request.data['conteudo'],
+                nome = request.data['name'],
+                data = request.data['date'],
+                imagem = request.data['image'],
+                conteudo = request.data['content'],
                 mentor = request.data['mentor'],
             )            
 

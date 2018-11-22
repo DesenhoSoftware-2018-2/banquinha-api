@@ -12,10 +12,10 @@ class EventoSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Evento
         fields = (
-            'nome',
-            'data',
-            'imagem',
-            'conteudo')
+            'name',
+            'date',
+            'image',
+            'content')
 
 class MonitoriaSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:

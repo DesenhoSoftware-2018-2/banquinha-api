@@ -18,9 +18,13 @@ from django.conf.urls import url
 from django.contrib import admin
 from django.urls import path
 from monitoria.views import monitoria, tag
+from usuario.views import post, get, getprofile
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^monitoria/', monitoria),
     url(r'^tag/', tag),
+    url(r'^usuario/', get),
+    url(r'^criaUsuario/', post),
+    url(r'^profile/', getprofile),
 ]
