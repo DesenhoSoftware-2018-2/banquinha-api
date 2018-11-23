@@ -10,6 +10,7 @@ from django.utils.decorators import method_decorator
 from rest_framework.permissions import AllowAny
 import requests, json
 from .models import Profile
+from .forms import LoginForm
 from .serializers import UserSerializer
 from .serializers import ProfileSerializer
 
@@ -57,24 +58,12 @@ def login_view(request) :
     if request.method == 'PUT':
         email = request.data['email']
         password = request.data['password']
-        username = User.objects.get(email=email).username
-        user = User.objects.get(email=email)
-        #import ipdb; ipdb.set_trace()
-        if user.check_password(password) == True:
-            print(email)
-            print(password)
-            user = authenticate(username=username, password=password)
-            print(user)
-            if user is not None:
-                login(request, user)
-                print('primeiro')
-                print('deu certo')
-                return Response(status=status.HTTP_200_OK)
-            else:
-                print('segundo')
-                return Response(status=status.HTTP_404_NOT_FOUND)
+        user = authenticate(username=email, password=password)
+        user.check_password(password)
+        if user is not None:
+            login(request, user)
+            return Response(status=status.HTTP_200_OK)
         else:
-            print('terceiro')
             return Response(status=status.HTTP_404_NOT_FOUND)
     else:
         return Response(status=status.HTTP_404_NOT_FOUND)
