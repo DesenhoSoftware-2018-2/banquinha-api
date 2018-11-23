@@ -1,0 +1,1 @@
+web: gunicorn banquinha-api.wsgi --log-file -

@@ -1,32 +1,28 @@
-## Banquinha API
 
-<p align="justify">&emsp;&emsp;Essa API é relacionada com o projeto da Banquinha, presente na mesma organização desse repositório e no seguinte link:
-[Banquinha](https://github.com/DesenhoSoftware-2018-2/banquinha-web)</p>
+# Banquinha API
 
-### Instalação
+ [![License: GPL](https://img.shields.io/aur/license/yaourt.svg)](http://www.nacaolivre.com.br/open-source/licenca-gpl/)
 
-<p align="justify">&emsp;&emsp;Para instalar todas as dependências necessárias do projeto, rode o seguinte comando:</p>
+A banquinha-api armazena toda o código backend do projeto banquinha. Para acessar os documentos entre no nosso site: https://desenhosoftware-2018-2.github.io/wiki/.
 
-```
-pip3 install -r requirements.txt
-```
 
-<p align="justify">&emsp;&emsp;Para que seja possível a utilização da API, é preciso executar o makemigrations. Este comando é necessário para criação de novas migrações relacionadas as models:</p>
+## Desenho de Software 2018/02
 
-```
-python3 manage.py makemigrations
-```
+Desenho de software, ou Projeto de software, é o processo de transformar os requistos dos usuários em documentos de baixo nível, se aproximando cada vez mais da implementação em codígo. Essa transformação inclui atividades de concepção, especificação e de prototipação de um software, que vai desde a interface do usuário até os algoritmos e estruturas de dados necessários para implementar o software.
 
-<p align="justify">&emsp;&emsp;Para que essas migrações possam ser manipuladas, tanto na aplicação de novas quando no exclusão das existentes, é necessário executar o comando:</p>
+Arquitetura de Software é a definição dos elementos arquiteturais, como banco de dados, servidores, clientes, entre outros. Envolve também como será a interação entre esses elementos, quais padrões serão necessários para o projeto e quais as restrições desses padrões.
 
-```
-python3 manage.py migrate
-```
+### Contribuir
+Você quer contribuir com nosso projeto? É simples! Temos um [guia de contribuição](docs/CONTRIBUTING.md) onde são explicados todos os passos para contribuir. Ahh, não esquece de ler nosso [código de conduta](docs/CODE_OF_CONDUCT.md).   
+Caso reste duvidas você também pode entrar em contato conosco criando uma issue ou pelo email isaquealvesdl@gmail.com.  
+Para contribuir com os nossos projetos acesse nossa organização: [DesenhoSoftware](https://github.com/DesenhoSoftware-2018-2)
 
-<p align="justify">&emsp;&emsp;Para executar a API é fundamental o seguinte comando: </p>
+### Ambiente
 
-```
-python3 manage.py runserver
-```
+Para executar o ambiente do projeto acesse nosso [guia de instalação](docs/guiaInstalacao.md)
 
-<p align="justify">&emsp;&emsp;Para acessar o servidor gerado no comando anterior, basta acessar [localhost:8000](http://localhost:8000/)</p>
+Para acessar o ambiente de desenvolvimento acesse:  https://github.com/DesenhoSoftware-2018-2
+
+### Documentação
+
+A documentação do projeto pode ser acessada pelo nosso site em https://desenhosoftware-2018-2.github.io/wiki/
