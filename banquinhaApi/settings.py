@@ -84,12 +84,8 @@ WSGI_APPLICATION = 'banquinhaApi.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('DB_NAME', 'banquinha'),
-        'USER': os.environ.get('DB_NAME', 'admin'),
-        'PASSWORD': os.environ.get('DB_NAME', 'admin'),
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
