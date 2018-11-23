@@ -27,29 +27,34 @@ class Event(models.Model):
     def tag_FK(self):
         return self.tag.id
 
-    def save( self, *args, **kwargs):
-        super(Event, self).save(*args, **kwargs)                
-        tags_query_set = Tag.objects.all().values_list('id')
-        print(tags_query_set)        
-        tags = [tag[0] for tag in tags_query_set]
-        for tag in tags:
-            self.tag.add(tag)
+    @property
+    def mentor_FK(self):
+        return self.mentor.id
+
+    # def save( self, *args, **kwargs):
+    #     super(Event, self).save(*args, **kwargs)                
+    #     tags_query_set = Tag.objects.all().values_list('id')
+    #     print(tags_query_set)        
+    #     tags = [tag[0] for tag in tags_query_set]
+    #     for tag in tags:
+    #         self.tag.add(tag)
     
     def like(self):
         pass
         # implementacao do metodo curtir
     
-    def add_mentored(self, event_id, mentored_list):
-        event = Event.objects.get(pk=event_id)
-        for mentored in mentored_list:
-            event.mentored.add(mentored)
+    # def add_mentored(self, event_id, mentored_list):
+    #     event = Event.objects.get(pk=event_id)
+    #     for mentored in mentored_list:
+    #         event.mentored.add(mentored)
 
 
 
 class Monitoria(Event):
-
+    max_mentorado = models.IntegerField(blank=False, default=4)
+    
     def clean(self, *args, **kwargs):
-        if self.mentor.count() > 4:
+        if self.mentored.count() > self.max_mentorado:
             raise ValidationError("Uma monitoria deve possuir no maximo 4 monitorados")
         super(Monitoria, self).clean(*args, **kwargs)
  

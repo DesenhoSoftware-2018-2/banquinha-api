@@ -11,17 +11,28 @@ class TagSerializer(serializers.HyperlinkedModelSerializer):
 class EventoSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Event
+        tag = serializers.ReadOnlyField()
+        mentor = serializers.ReadOnlyField()
         fields = (
             'name',
             'date',
             'image',
             'content',
+            'tag',
+            'mentored',
             'mentor',)
 
 class MonitoriaSerializer(serializers.HyperlinkedModelSerializer):
     mentor = serializers.SerializerMethodField()
-
+    
     class Meta:
         model = Monitoria
         fields = (
-            'name', 'date', 'image', 'content', 'tag', 'mentored', 'mentor', )
+            'name',
+            'date',
+            'image',
+            'content',
+            'tag',
+            'mentored',
+            'mentor',
+            'max_mentorado',)

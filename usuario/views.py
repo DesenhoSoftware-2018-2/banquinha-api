@@ -40,8 +40,13 @@ def post(request):
     if request.method == 'POST':
         serialized = UserSerializer(data=request.data)
         if serialized.is_valid():
-            print('is_valid')
-            print(serialized.save())
+            created_user = User.objects.create_user(
+                serialized.data['email'],
+                serialized.data['username'],
+            )
+            password = serialized.data['password']
+            password = created_user.set_password(password)
+            created_user.save()
             return Response(serialized.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serialized._errors, status=status.HTTP_400_BAD_REQUEST)

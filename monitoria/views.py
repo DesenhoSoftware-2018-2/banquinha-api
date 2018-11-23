@@ -23,14 +23,18 @@ def monitoria(request):
         if request.data:
             user = User.objects.get(id=request.data['mentor'])
             mentor = Profile.objects.get(user=user)
-            print(mentor)
+            
             monitoria, created = Monitoria.objects.get_or_create(                
                 name = request.data['name'],
                 date = request.data['date'],
                 image = request.data['image'],
-                content = request.data['content'],
-                mentor = mentor,
-            )            
+                content = request.data['content'],                
+                mentor = mentor,                        
+            )
+            for item in request.data['mentored']:
+                user_mentored = User.objects.get(id=item)
+                mentored_object = Profile.objects.get(user=user_mentored)
+                monitoria.mentored.add(mentored_object)
 
             if created:                
                 return Response(status=status.HTTP_200_OK)
@@ -40,10 +44,21 @@ def monitoria(request):
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
-@api_view(['GET'])
+@api_view(['GET', 'POST'])
 def tag(request):
 
     if request.method == 'GET':
         tag = Tag.objects.all()
         serializer = TagSerializer(tag, many=True)
         return JsonResponse(serializer.data, safe=False)
+    elif request.method == 'POST':
+        if request.data:
+            tag, created = Tag.objects.get_or_create(                
+                tag = request.data['tag'],
+            )
+            if created:                
+                return Response(status=status.HTTP_200_OK)
+            else:
+                return Response(status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
