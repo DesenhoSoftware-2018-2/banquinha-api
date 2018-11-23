@@ -61,6 +61,9 @@ DEFAULT_AUTHENTICATION_CLASSES = [
     'rest_framework.authentication.BasicAuthentication'
 ]
 
+AUTHENTICATION_BACKENDS = (
+        'django.contrib.auth.backends.ModelBackend',
+)
 
 CORS_ORIGIN_ALLOW_ALL = True
 CSRF_COOKIE_SECURE = True

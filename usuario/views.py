@@ -12,6 +12,7 @@ import requests, json
 from .models import Profile
 from .serializers import UserSerializer
 from .serializers import ProfileSerializer
+from .forms import LoginForm
 
 @api_view(['GET'])
 @permission_classes((AllowAny,))
@@ -46,40 +47,30 @@ def post(request):
         else:
             return Response(serialized._errors, status=status.HTTP_400_BAD_REQUEST)
 
-@api_view(['GET', 'PUT', ])
+@api_view(['GET', 'PUT', 'POST', ])
 def login_view(request) :
     if request.method == 'PUT':
 
         email = request.data['email']
         password = request.data['password']
-        print(email)
-        print(password)
-        user = authenticate(email=email, password=password)
-        print(user)
-        if user is not None:
-            login(request, user)
-            print('primeiro')
-            return Response(status=status.HTTP_200_OK)
+        username = User.objects.get(email=email).username
+        user = User.objects.get(email=email)
+        #import ipdb; ipdb.set_trace()
+        if user.check_password(password) == True:
+            print(email)
+            print(password)
+            user = authenticate(username=username, password=password)
+            print(user)
+            if user is not None:
+                login(request, user)
+                print('primeiro')
+                print('deu certo')
+                return Response(status=status.HTTP_200_OK)
+            else:
+                print('segundo')
+                return Response(status=status.HTTP_404_NOT_FOUND)
         else:
-            print('segundo')
+            print('terceiro')
             return Response(status=status.HTTP_404_NOT_FOUND)
     else:
         return Response(status=status.HTTP_404_NOT_FOUND)
-
-
-#@api_view(['PUT', 'GET'])
-#@method_decorator(csrf_protect)
-#def login_view(self, request, format=None):
-#    data = request.data
-#    email = data.get('email', None)
-#    password = data.get('password', None)
-#    user = authenticate(email=email, password=password)
-#    if user is not None:
-#        if user.is_active:
-#            log(request, user)
-#
-#            return Response(status=status.HTTP_200_OK)
-#        else:
-#            return Response(status=status.HTTP_404_NOT_FOUND)
-#    else:
-#        return Response(status=status.HTTP_404_NOT_FOUND)
