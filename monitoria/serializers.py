@@ -1,4 +1,4 @@
-from .models import Tag, Evento, Monitoria
+from .models import Tag, Event, Monitoria
 from rest_framework import serializers
 
 
@@ -10,7 +10,7 @@ class TagSerializer(serializers.HyperlinkedModelSerializer):
 
 class EventoSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = Evento
+        model = Event
         fields = (
             'name',
             'date',
