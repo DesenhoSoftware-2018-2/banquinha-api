@@ -15,10 +15,13 @@ class EventoSerializer(serializers.HyperlinkedModelSerializer):
             'name',
             'date',
             'image',
-            'content')
+            'content',
+            'mentor',)
 
 class MonitoriaSerializer(serializers.HyperlinkedModelSerializer):
+    mentor = serializers.SerializerMethodField()
+
     class Meta:
         model = Monitoria
         fields = (
-            'mentor')
+            'name', 'date', 'image', 'content', 'tag', 'mentored', 'mentor', )

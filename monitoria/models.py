@@ -15,6 +15,10 @@ class Event(models.Model):
     content = models.CharField(max_length=30, blank=True)
     tag = models.ManyToManyField(Tag)
     mentored = models.ManyToManyField(Profile)
+    mentor = models.OneToOneField(
+        Profile,
+        on_delete=models.CASCADE,
+        related_name='mentor')
 
     class Meta:
         abstract = True
@@ -25,7 +29,8 @@ class Event(models.Model):
 
     def save( self, *args, **kwargs):
         super(Event, self).save(*args, **kwargs)                
-        tags_query_set = Tag.objects.all().values_list('id')        
+        tags_query_set = Tag.objects.all().values_list('id')
+        print(tags_query_set)        
         tags = [tag[0] for tag in tags_query_set]
         for tag in tags:
             self.tag.add(tag)

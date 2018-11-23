@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from .models import Monitoria, Tag
+from .models import Monitoria, Tag, Profile
+from django.contrib.auth.models import User
 from .serializers import MonitoriaSerializer, TagSerializer
 from rest_framework.response import Response
 from rest_framework import status
@@ -13,17 +14,22 @@ def monitoria(request):
 
     if request.method == 'GET':
         monitoria = Monitoria.objects.all()
-        serializer = MonitoriaSerializer(monitoria, many=True)
-        return JsonResponse(serializer.data, safe=False)
+        if not monitoria:
+            return Response({}, status=status.HTTP_404_NOT_FOUND)
+        else:
+            return Response(MonitoriaSerializer(monitoria, many=True).data)
 
     elif request.method == 'POST':
-
         if request.data:
+            user = User.objects.get(id=request.data['mentor'])
+            mentor = Profile.objects.get(user=user)
+            print(mentor)
             monitoria, created = Monitoria.objects.get_or_create(                
                 name = request.data['name'],
                 date = request.data['date'],
                 image = request.data['image'],
                 content = request.data['content'],
+                mentor = mentor,
             )            
 
             if created:                
