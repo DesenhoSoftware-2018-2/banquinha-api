@@ -1,5 +1,6 @@
 from django.conf.urls import url
-from .views import users
+
+app_name = UserProfileConfig.name
 
 urlpatterns = [
 ]

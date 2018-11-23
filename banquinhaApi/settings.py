@@ -44,6 +44,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.middleware.common.BrokenLinkEmailsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
@@ -55,7 +56,15 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+DEFAULT_AUTHENTICATION_CLASSES = [
+    'rest_framework.authentication.SessionAuthentication',
+    'rest_framework.authentication.BasicAuthentication'
+]
+
+
 CORS_ORIGIN_ALLOW_ALL = True
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
 
 ROOT_URLCONF = 'banquinhaApi.urls'
 
