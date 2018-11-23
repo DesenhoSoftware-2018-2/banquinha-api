@@ -11,7 +11,7 @@ class Tag(models.Model):
 class Event(models.Model):
     name = models.CharField(max_length=30, blank=True)
     date = models.DateTimeField(blank=True)
-    image = models.CharField(max_length=30, blank=True)
+    image = models.ImageField(max_length=30, blank=True)
     content = models.CharField(max_length=30, blank=True)
     tag = models.ManyToManyField(Tag)
     mentored = models.ManyToManyField(Profile)
