@@ -16,12 +16,14 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from django.urls import path
-from usuario.views import post, get, getprofile
+from django.contrib.auth.views import LoginView
+from usuario.views import get, getprofile, post, login_view
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    url(r'^usuario/', get),
-    url(r'^criaUsuario/', post),
-    url(r'^profile/', getprofile),
+    url(r'^usuario/', get, name='usuario'),
+    url(r'^criaUsuario/', post, name='cadastro'),
+    url(r'^profile/', getprofile, name='perfil'),
+    url(r'^login/', login_view, name='login'),
 ]
