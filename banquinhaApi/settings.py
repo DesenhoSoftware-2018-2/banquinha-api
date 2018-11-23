@@ -62,7 +62,7 @@ DEFAULT_AUTHENTICATION_CLASSES = [
 ]
 
 AUTHENTICATION_BACKENDS = (
-        'django.contrib.auth.backends.ModelBackend',
+    'django.contrib.auth.backends.ModelBackend',
 )
 
 CORS_ORIGIN_ALLOW_ALL = True
