@@ -1,33 +1,22 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.core import serializers
 from django.http import JsonResponse
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
-from django.utils.decorators import method_decorator
-from rest_framework.permissions import AllowAny
+from django.contrib.auth.decorators import login_required
+from rest_framework.permissions import AllowAny, IsAuthenticated
 import requests, json
 from .models import Profile
-from .forms import LoginForm
 from .serializers import UserSerializer
 from .serializers import ProfileSerializer
 
 
 @api_view(['GET'])
 @permission_classes((AllowAny,))
-def get(request):
-    if request.method == 'GET':
-        users = User.objects.all()
-        if not users:
-            return Response({}, status=status.HTTP_404_NOT_FOUND)
-        else:
-            return Response({'usuarios': UserSerializer(users, many=True).data})
-
-@api_view(['GET'])
-@permission_classes((AllowAny,))
-def getprofile(request):
+def getList(request):
     if request.method == 'GET':
         users = Profile.objects.all()
         user_serialazed = ProfileSerializer(users, many=True).data
@@ -38,7 +27,7 @@ def getprofile(request):
 
 @api_view(['POST'])
 @permission_classes((AllowAny,))
-def post(request):
+def create(request):
     if request.method == 'POST':
         serialized = UserSerializer(data=request.data)
         if serialized.is_valid():
@@ -54,12 +43,13 @@ def post(request):
             return Response(serialized._errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET', 'PUT', 'POST', ])
-def login_view(request) :
+def loginView(request) :
     if request.method == 'PUT':
         email = request.data['email']
         password = request.data['password']
         user = authenticate(username=email, password=password)
         user.check_password(password)
+        logUser = User()
         if user is not None:
             login(request, user)
             return Response(status=status.HTTP_200_OK)
@@ -67,3 +57,27 @@ def login_view(request) :
             return Response(status=status.HTTP_404_NOT_FOUND)
     else:
         return Response(status=status.HTTP_404_NOT_FOUND)
+
+@api_view(['GET', ])
+@permission_classes((IsAuthenticated,))
+@login_required
+def getDetail(request):
+    user = User.objects.get(email=email)
+    if not user:
+        return Response({}, status=status.HTTP_404_NOT_FOUND)
+    else:
+        return Response({'usuario': ProfileSerializer(user).data})
+
+@api_view(['PUT', ])
+@permission_classes((IsAuthenticated,))
+def logoutView(request):
+    logout(request)
+    return Response(status=status.HTTP_200_OK)
+
+@api_view(['PUT', ])
+@permission_classes((IsAuthenticated,))
+def delete(request):
+    user = request.data
+    user = User.objects.get(email=user.email)
+    user.delete()
+    return Response(status=status.HTTP_204_NO_CONTENT)

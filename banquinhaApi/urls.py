@@ -16,14 +16,15 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from django.urls import path
-from django.contrib.auth.views import LoginView
-from usuario.views import get, getprofile, post, login_view
+from usuario.views import getList, create, loginView, getDetail, logoutView, delete
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    url(r'^usuario/', get, name='usuario'),
-    url(r'^criaUsuario/', post, name='cadastro'),
-    url(r'^profile/', getprofile, name='perfil'),
-    url(r'^login/', login_view, name='login'),
+    url(r'^criaUsuario/', create, name='cadastro'),
+    url(r'^profile/', getList, name='lista de perfis'),
+    url(r'^login/', loginView, name='login'),
+    url(r'^usuario/', getDetail, name='usuario'),
+    url(r'^logout/', logoutView, name='logout'),
+    url(r'^delete/', delete, name='delete'),
 ]
