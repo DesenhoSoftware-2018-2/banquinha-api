@@ -12,6 +12,7 @@ chrome-gnome-shell==0.0.0
 click==6.2
 colorama==0.3.7
 command-not-found==0.3
+corsheaders==2.4.0
 cryptography==2.4.1
 decorator==4.3.0
 defer==1.0.6
